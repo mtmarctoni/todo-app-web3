@@ -5,7 +5,7 @@
   "description": "A decentralized todo application built with Next.js, Tailwind CSS, TypeScript, and Solidity.",
   "author": "mtmarctoni",
   "license": "MIT",
-  "homepage": "https://mtmarctoni.github.io/todo-app-web3/",
+  "homepage": "https://todo-app-web3.vercel.app/",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mtmarctoni/todo-app-web3.git"
