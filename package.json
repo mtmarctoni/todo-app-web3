@@ -21,7 +21,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "git:push": "git commit -am quickCommit && git push"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.1",
