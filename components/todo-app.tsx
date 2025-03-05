@@ -19,18 +19,35 @@ export default function TodoApp() {
   const [loading, setLoading] = useState(true)
   const [activeFilter, setActiveFilter] = useState<"all" | "active" | "completed">("all")
   const { toast } = useToast()
+  const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
     if (connected && contract) {
+      setError(null)
       fetchTodos()
     } else if (!connecting) {
       setLoading(false)
+      if (connected && !contract) {
+        setError("Contract not initialized. Please reconnect your wallet.")
+      }
     }
   }, [connected, contract, connecting])
 
   const fetchTodos = async () => {
     try {
       setLoading(true)
+
+      if (!contract) {
+        setError("Contract not initialized.")
+        toast({
+          title: "Error fetching todos",
+          description: "Contract not initialized. Please reconnect your wallet.",
+          variant: "destructive",
+        })
+        setLoading(false)
+        return
+      }
+
       const todoCount = await contract.todoCount()
       const fetchedTodos: Todo[] = []
 
@@ -60,6 +77,14 @@ export default function TodoApp() {
 
   const addTodo = async (content: string) => {
     try {
+      if (!contract) {
+        toast({
+          title: "Error creating todo",
+          description: "Contract not initialized. Please reconnect your wallet.",
+          variant: "destructive",
+        })
+        return
+      }
       const tx = await contract.createTodo(content)
       await tx.wait()
 
@@ -81,6 +106,15 @@ export default function TodoApp() {
 
   const toggleTodo = async (id: string) => {
     try {
+      if (!contract) {
+        toast({
+          title: "Error updating todo",
+          description: "Contract not initialized. Please reconnect your wallet.",
+          variant: "destructive",
+        })
+        return
+      }
+
       const tx = await contract.toggleCompleted(id)
       await tx.wait()
 
@@ -102,6 +136,14 @@ export default function TodoApp() {
 
   const deleteTodo = async (id: string) => {
     try {
+      if (!contract) {
+        toast({
+          title: "Error deleting todo",
+          description: "Contract not initialized. Please reconnect your wallet.",
+          variant: "destructive",
+        })
+        return
+      }
       const tx = await contract.deleteTodo(id)
       await tx.wait()
 
@@ -150,7 +192,12 @@ export default function TodoApp() {
           ) : (
             <>
               <div className="mb-6">
-                <TodoForm onAddTodo={addTodo} />
+                  <TodoForm onAddTodo={addTodo} />
+                  {error && (
+                    <div className="mb-4 p-3 text-sm border rounded-lg border-destructive/50 bg-destructive/10 text-destructive">
+                      {error}
+                    </div>
+                  )}                  
               </div>
 
               <Tabs defaultValue="all" className="w-full" onValueChange={(value) => setActiveFilter(value as any)}>

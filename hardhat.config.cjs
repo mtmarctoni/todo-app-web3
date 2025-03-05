@@ -1,8 +1,8 @@
-import type { HardhatUserConfig } from "hardhat/config"
-import "@nomicfoundation/hardhat-toolbox"
-import "@nomicfoundation/hardhat-ignition"
+// import type { HardhatUserConfig } from "hardhat/config"
+require("@nomicfoundation/hardhat-toolbox")
+require("@nomicfoundation/hardhat-ignition")
 
-const config: HardhatUserConfig = {
+module.exports = {
   solidity: "0.8.20",
   networks: {
     hardhat: {
@@ -18,5 +18,5 @@ const config: HardhatUserConfig = {
   },
 }
 
-export default config
+// export default config
 

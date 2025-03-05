@@ -54,7 +54,7 @@ export function Web3Provider({ children }: Web3ProviderProps) {
 
     const initializeProvider = async () => {
       try {
-        let web3Provider: ethers.Provider
+        let web3Provider: ethers.BrowserProvider | ethers.JsonRpcProvider
         let web3Signer: ethers.Signer
 
         // Check if we're in a browser and if window.ethereum is available
@@ -72,6 +72,8 @@ export function Web3Provider({ children }: Web3ProviderProps) {
           web3Provider = new ethers.JsonRpcProvider("http://127.0.0.1:8545")
           web3Signer = await web3Provider.getSigner()
           setAddress(await web3Signer.getAddress())
+          console.log(web3Provider);
+          
         }
 
         // Create contract instance
