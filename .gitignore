@@ -27,5 +27,6 @@ yarn-error.log*
 next-env.d.ts
 
 # hardhat
-coverage/
-cache/
+/coverage
+coverage.json
+/cache
