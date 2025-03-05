@@ -1,9 +1,11 @@
-import { expect } from "chai"
-import { ethers } from "hardhat"
-import type { Contract } from "ethers"
+// import { expect } from "chai"
+// import { ethers } from "hardhat"
+// import type { Contract } from "ethers"
+const { expect } = require("chai")
+const { ethers } = require("hardhat")
 
 describe("TodoList", () => {
-  let todoList: Contract
+  let todoList
 
   beforeEach(async () => {
     const TodoList = await ethers.getContractFactory("TodoList")
